@@ -5,13 +5,23 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
+use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -24,6 +34,18 @@ class PostResource extends Resource
         return $form
             ->schema([
                 //
+                Card::make()->schema([
+                    Select::make('category_id')
+                        ->relationship('category', 'name'),
+                    TextInput::make('title')
+                        ->reactive()
+                        ->afterStateUpdated(function (Closure $set, $state) {
+                            $set('slug', Str::slug($state));
+                        })->required(),
+                    TextInput::make('slug')->required(),
+                    RichEditor::make('content'),
+                    Toggle::make('status'),
+                ]),
             ]);
     }
 
@@ -32,6 +54,20 @@ class PostResource extends Resource
         return $table
             ->columns([
                 //
+                //
+                // TextColumn::make('id'),
+                TextColumn::make('No.')->getStateUsing(
+                    static function ($rowLoop, HasTable $livewire): string {
+                        return (string)($rowLoop->iteration + ($livewire->tableRecordsPerPage * ($livewire->page - 1
+                        )
+                        )
+                        );
+                    }
+                ),
+                TextColumn::make('category.name'),
+                TextColumn::make('title')->limit(50)->sortable(),
+                TextColumn::make('slug')->limit(50),
+                ToggleColumn::make('status'),
             ])
             ->filters([
                 //
@@ -43,14 +79,14 @@ class PostResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -58,5 +94,5 @@ class PostResource extends Resource
             'create' => Pages\CreatePost::route('/create'),
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
-    }    
+    }
 }

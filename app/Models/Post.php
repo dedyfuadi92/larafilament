@@ -15,7 +15,7 @@ class Post extends Model
         'content',
         'status',
     ];
-    public function categories()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
