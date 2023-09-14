@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class FilamentServiceProvider extends ServiceProvider
@@ -21,12 +22,13 @@ class FilamentServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(User $user): void
+    public function boot(): void
     {
         //
-        if ($user->hasRole('admin')) {
-            # code...
-            Filament::serving(function () {
+        Filament::serving(function () {
+            Filament::registerViteTheme('resources/css/filament.css');
+            if (Auth::check() && Auth::user()->hasRole('admin')) {
+                # code...
                 Filament::registerUserMenuItems([
                     UserMenuItem::make()
                         ->label('Settings')
@@ -35,7 +37,7 @@ class FilamentServiceProvider extends ServiceProvider
                         ->icon('heroicon-s-cog'),
                     // ...
                 ]);
-            });
-        }
+            }
+        });
     }
 }
