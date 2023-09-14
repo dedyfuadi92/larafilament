@@ -56,6 +56,9 @@ class UserResource extends Resource
                     Select::make('roles')
                         ->multiple()
                         ->relationship('roles', 'name')->preload(),
+                    // Select::make('permissions')
+                    //     ->multiple()
+                    //     ->relationship('permissions', 'name')->preload(),
                 ]),
                 //
             ]);
@@ -75,6 +78,7 @@ class UserResource extends Resource
                 ),
                 TextColumn::make('name')->limit('50')->sortable()->searchable(),
                 TextColumn::make('email')->limit('50')->searchable(),
+                TextColumn::make('roles.name'),
             ])
             ->filters([
                 //
