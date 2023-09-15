@@ -13,6 +13,7 @@ class ListUsers extends ListRecords
     protected function getActions(): array
     {
         return [
+            Actions\ButtonAction::make('Laporan pdf')->url(fn () => route('download.tes'))->openUrlInNewTab(),
             Actions\CreateAction::make(),
         ];
     }

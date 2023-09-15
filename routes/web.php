@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/download', function () {
+    return 'Latihan Laporan PDF';
+    // return view('welcome');
+})->name('download.tes');
