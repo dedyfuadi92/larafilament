@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/download', [PDFController::class, 'downloadPdf'])->name('download.tes');
+Route::get('/download-user/{id}', [PDFController::class, 'downloadUserPdf'])->name('download.userPdf');

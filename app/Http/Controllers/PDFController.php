@@ -19,4 +19,9 @@ class PDFController extends Controller
         $pdf = Pdf::loadView('userPDF', $data);
         return $pdf->download('tes-pdf-filament.pdf');
     }
+    public function downloadUserPdf($id)
+    {
+        $user = User::find($id);
+        return $user;
+    }
 }
