@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/download', function () {
-    return 'Latihan Laporan PDF';
-    // return view('welcome');
-})->name('download.tes');
+Route::get('/download', [PDFController::class, 'downloadPdf'])->name('download.tes');
