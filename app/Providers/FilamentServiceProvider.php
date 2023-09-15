@@ -22,10 +22,11 @@ class FilamentServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
+    public function boot(User $user): void
     {
         //
         Filament::serving(function () {
+            // Using Vite
             Filament::registerViteTheme('resources/css/filament.css');
             if (Auth::check() && Auth::user()->hasRole('admin')) {
                 # code...

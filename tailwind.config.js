@@ -1,23 +1,9 @@
-// /** @type {import('tailwindcss').Config} */
-// export default {
-//   content: [],
-//   theme: {
-//     extend: {},
-//   },
-//   plugins: [],
-// }
+import colors from 'tailwindcss/colors'
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 
-const colors = require('tailwindcss/colors')
-const forms = require('tailwindcss/forms')
-const typography = require('tailwindcss/typography')
-
-module.exports = {
+export default {
     content: [
-        // './packages/admin/resources/**/*.blade.php',
-        // './packages/forms/resources/**/*.blade.php',
-        // './packages/notifications/resources/**/*.blade.php',
-        // './packages/support/resources/**/*.blade.php',
-        // './packages/tables/resources/**/*.blade.php',
         './resources/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
     ],
@@ -28,15 +14,12 @@ module.exports = {
                 danger: colors.rose,
                 primary: colors.blue,
                 success: colors.green,
-                warning: colors.amber,
-            },
-            fontFamily: {
-                sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
+                warning: colors.yellow,
             },
         },
     },
     plugins: [
-        require('@tailwindcss/forms'),
-        require('@tailwindcss/typography'),
+        forms,
+        typography,
     ],
 }
