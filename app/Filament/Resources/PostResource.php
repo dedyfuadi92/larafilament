@@ -19,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -93,6 +94,11 @@ class PostResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('download')
+                    ->color('info')
+                    ->icon('heroicon-o-download')
+                    ->url(fn (Post $record) => route('download.image', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -115,8 +121,9 @@ class PostResource extends Resource
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
-    public static function getWidgets():array{
-        return[
+    public static function getWidgets(): array
+    {
+        return [
             StatsOverviewWidget::class,
         ];
     }

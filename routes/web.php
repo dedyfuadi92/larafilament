@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 Route::get('/download', [PDFController::class, 'downloadPdf'])->name('download.tes');
 Route::get('/download-user/{id}', [PDFController::class, 'downloadUserPdf'])->name('download.userPdf');
+Route::get('/download-image/{id}', [DownloadController::class, 'downloadImage'])->name('download.image');
